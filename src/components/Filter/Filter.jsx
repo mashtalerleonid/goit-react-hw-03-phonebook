@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { Label, Input } from "./Filter.styled";
 
-function Filter({ filterChange, filter }) {
+function Filter({ filterBlur, filterChange, filter }) {
   return (
     <Label>
       Find contacts by name:
-      <Input value={filter} onChange={filterChange} />
+      <Input value={filter} onChange={filterChange} onBlur={filterBlur} />
     </Label>
   );
 }

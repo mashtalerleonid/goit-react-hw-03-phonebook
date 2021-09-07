@@ -46,6 +46,10 @@ class App extends Component {
     this.setState({ filter: value });
   };
 
+  filterBlur = (e) => {
+    this.setState({ filter: "" });
+  };
+
   getFilteredContacts = () => {
     const { filter, contacts } = this.state;
 
@@ -80,7 +84,11 @@ class App extends Component {
         <ContactForm addContact={this.addContact} />
 
         <h2>Contacts</h2>
-        <Filter filterChange={this.filterChange} filter={filter} />
+        <Filter
+          filterBlur={this.filterBlur}
+          filterChange={this.filterChange}
+          filter={filter}
+        />
         <ContactList
           list={filteredContacts}
           onDeleteContact={this.deleteContact}
