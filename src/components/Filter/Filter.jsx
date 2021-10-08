@@ -1,18 +1,31 @@
-import PropTypes from "prop-types";
 import { Label, Input } from "./Filter.styled";
 
-function Filter({ filterBlur, filterChange, filter }) {
+import { connect } from "react-redux";
+import * as actions from "../../redux/phonebook/phonebook-actions";
+
+function Filter({ onFilterBlur, onFilterChange, filter }) {
   return (
     <Label>
       Find contacts by name:
-      <Input value={filter} onChange={filterChange} onBlur={filterBlur} />
+      <Input value={filter} onChange={onFilterChange} onBlur={onFilterBlur} />
     </Label>
   );
 }
 
-Filter.propTypes = {
-  filterChange: PropTypes.func,
-  filter: PropTypes.string.isRequired,
+const mapStateToProps = (state) => {
+  return {
+    filter: state.contacts.filter,
+  };
 };
 
-export default Filter;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFilterChange: (event) =>
+      dispatch(actions.filterChange(event.target.value)),
+    onFilterBlur: () => dispatch(actions.filterBlur()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+
+// export default Filter;

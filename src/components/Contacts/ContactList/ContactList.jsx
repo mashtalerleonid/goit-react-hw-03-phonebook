@@ -1,11 +1,13 @@
-import PropTypes from "prop-types";
 import ContactListItem from "components/Contacts/ContactListItem/";
 import { List } from "./ContactList.styled";
 
-function ContactList({ list, onDeleteContact }) {
+import { connect } from "react-redux";
+import * as actions from "../../../redux/phonebook/phonebook-actions";
+
+function ContactList({ items, onDeleteContact }) {
   return (
     <List>
-      {list.map((item) => {
+      {items.map((item) => {
         const { id, name, number } = item;
 
         return (
@@ -22,9 +24,24 @@ function ContactList({ list, onDeleteContact }) {
   );
 }
 
-ContactList.propTypes = {
-  onDeleteContact: PropTypes.func,
-  list: PropTypes.arrayOf(PropTypes.shape).isRequired,
+const getFilteredItems = (items, filter) => {
+  return items.filter((item) =>
+    item.name.toLowerCase().includes(filter.toLowerCase())
+  );
 };
 
-export default ContactList;
+const mapStateToProps = ({ contacts: { items, filter } }) => {
+  return {
+    items: getFilteredItems(items, filter),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onDeleteContact: (contactId) => dispatch(actions.deleteContact(contactId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+
+// export default ContactList;

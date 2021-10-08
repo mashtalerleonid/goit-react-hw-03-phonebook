@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
 import { Item } from "./ContactListItem.styled";
+import { connect } from "react-redux";
+import * as actions from "../../../redux/phonebook/phonebook-actions";
 
 function ContactListItem({ id, name, number, onDeleteContact }) {
   return (
@@ -12,11 +13,12 @@ function ContactListItem({ id, name, number, onDeleteContact }) {
   );
 }
 
-ContactListItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onDeleteContact: PropTypes.func,
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onDeleteContact: (contactId) => dispatch(actions.deleteContact(contactId)),
+//   };
+// };
+
+// export default connect(null, mapDispatchToProps)(ContactListItem);
 
 export default ContactListItem;
